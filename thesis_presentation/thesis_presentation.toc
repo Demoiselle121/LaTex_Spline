@@ -1,0 +1,21 @@
+\babel@toc {ngerman}{}\relax 
+\beamer@sectionintoc {1}{Einleitung}{3}{0}{1}
+\beamer@sectionintoc {2}{Interpolation }{3}{0}{2}
+\beamer@subsectionintoc {2}{1}{Definition}{3}{0}{2}
+\beamer@subsectionintoc {2}{2}{Zweck}{5}{0}{2}
+\beamer@subsectionintoc {2}{3}{Arten von Interpolationstechniken}{8}{0}{2}
+\beamer@subsectionintoc {2}{4}{Interpolation VS Approximation}{10}{0}{2}
+\beamer@sectionintoc {3}{Lineare interpolierende Splines}{12}{0}{3}
+\beamer@subsectionintoc {3}{1}{Lineare interpolation}{12}{0}{3}
+\beamer@subsectionintoc {3}{2}{Interpolationsfehler bei Lineare interpolierende Splines}{14}{0}{3}
+\beamer@subsubsectionintoc {3}{2}{1}{Kontinuität}{15}{0}{3}
+\beamer@subsubsectionintoc {3}{2}{2}{Sobolev-Räume}{16}{0}{3}
+\beamer@subsubsectionintoc {3}{2}{3}{Anwendung der linearen Spline Interpolation}{20}{0}{3}
+\beamer@sectionintoc {4}{Splin Cubic}{22}{0}{4}
+\beamer@subsectionintoc {4}{1}{Splinen von Hermite}{22}{0}{4}
+\beamer@subsectionintoc {4}{2}{Kardinale Spline}{26}{0}{4}
+\beamer@subsectionintoc {4}{3}{Kubische Splin}{29}{0}{4}
+\beamer@subsubsectionintoc {4}{3}{1}{Konstruktion kubischer Splines}{31}{0}{4}
+\beamer@subsubsectionintoc {4}{3}{2}{Genauigkeit}{32}{0}{4}
+\beamer@subsubsectionintoc {4}{3}{3}{Erstellen einer kubischen Spline Interpolant}{33}{0}{4}
+\beamer@sectionintoc {5}{Zusammenfassung und Ausblick}{35}{0}{5}

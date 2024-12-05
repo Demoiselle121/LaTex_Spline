@@ -1,0 +1,57 @@
+% Leslie Lamport hat LaTeX entwickelt, um dem Anwender das Schreiben
+% spezieller Dokumente zu vereinfachen. Um den europäischen/deutschen
+% Vorstellungen eines Layouts zu entsprechen, hat Markus Kohm analoge
+% Dokumentklassen entwickelt (Koma-Klassen)
+
+% Diese Dokumente sind
+% im Original    extern              Koma       extern
+% 1. article                         scrartcl
+% 2. report                          scrreprt
+% 3. book                            scrbook
+% 4. letter                          scrlttr2
+% 5. slide                                      beamer
+% 6.             poster                         tikzposter
+% 7.                                            komacv bzw. europecv
+% Das Layout ist im Original amerikanischen Vorstellungen ensprechend!
+
+% Der Aufbau ist immer
+
+% Kopf des Dokumentes
+% ===================
+\documentclass[                 % neue Dokumentklasse, es gibt Alternativen,
+                                % beamer hat sich als Standard durchgesetzt
+                                % Optionen sind
+                 % aspectratio= % Verhältnis der Seiten, muss auf den jeweiligen
+                                % Projektor angepasst werden, möglichkeiten sind
+                                % 169 (16:9), 1610 (16:10), ..., der Standard
+                                % ist 4:3
+                 handout,       % das Poster wird so formatiert,
+                                % dass es auf einer Seite erscheint
+                 % ignorenonframetext,
+                 ngerman,       % die üblichen globalen Optionen werden
+                                % unterstützt
+            ]{beamer}
+\usepackage[orientation=portrait, size=a0, scale=1.4]{beamerposter}
+%           ^                     ^        ^
+%           |                     |        Die Schriftgröße wird um
+%           |                     |        den Faktor 1.4 vergrößert
+%           |                     Die Zielgröße ist DIN A4
+%           Das Zielformat ist Hochformat
+%           im Gegensatz zu Querformat (landscape)
+
+\usetheme{PaloAlto}
+
+
+% nun wird der Text der Arbeit geladen
+\input{../../../shared/texts/quadH}
+
+
+% der folgende Kommentar wird vom Emacs gebraucht, ist also ansonsten ohne
+% Bedeutung!
+
+%%% Local Variables:
+%%% TeX-engine: luatex
+%%% mode: latex
+%%% TeX-master: t
+%%% ispell-local-dictionary: "deutsch8"
+%%% End:
