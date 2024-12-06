@@ -1,0 +1,967 @@
+\begin{filecontents*}[overwrite]{../../../shared/texts/abstract.tex}
+Hier wird eine Familie von Interpolationssplines vorgestellt, die 
+die meisten Spline-Typen aufweisen und daher auch in Anwendungen, 
+die die zukünftigen Punkte nicht kennen, glatte Interpolationskurven
+erzeugen können, ohne die Notwendigkeit komplexerer Berechnungsmethoden.
+So ermöglichen die Drei-Punkt-Splines eine größere Einstellfreiheit 
+und können so an die Anwendung in Reichweite angepasst werden.
+\end{filecontents*}
+%
+\begin{filecontents*}[overwrite]{../../../shared/texts/motivation.tex}
+Zweck der Interpolation ist,einen Satz von Werten an vorgegebenen 
+Positionen mit neuen plausiblen Werten im Einklang mit den bereits 
+vorhandenen Werten zu ergänzen.Genauer gesagt besteht das Problem darin,
+unter Berücksichtigung von Paaren\((x_i,y_i)\) eine Funktion
+\(\Phi = \Phi(x)\) wie \(\Phi(x_i) =y_i\) für \(i= 0,\dots,n\) zu 
+finden.Es wird dann gesagt , dass \(y_i\) interpoliert \(x_i\).
+\ifthenelse{\boolean{isPoster}}{%
+}{%
+	\ifthenelse{\boolean{isPresentation}}{%	 %
+	}{%
+		\cref{fig:nuagedepoints}
+	}
+}%
+\end{filecontents*}
+
+\begin{filecontents*}[overwrite]{../../../shared/texts/extremwerte_00.tex}
+Der allgemeine Ausdruck eines Spline-Stücks und seiner ersten Ableitung, 
+die hier ein Polynom des Grades 3 ist:
+\begin{align*}
+S_i(t) &= h_0(t)y_i+h_1(t)y_{i+1}+h_2(t)m_i+h_3(t)m_{i+1}
+\end{align*}
+\end{filecontents*}
+
+\begin{filecontents*}[overwrite]{../../../shared/texts/LinInterp.tex}
+Lineare Interpolation ist die einfachste Methode, da Linien zwischen
+zwei benachbarten Punkten verwendet werden.Die Aufgabe besteht darin,
+gegeben \(x_i\) wo \(i=1,\dots,n\),die Aufgabe ist es f(x) zu schätzen.
+Die lineare Spline \(s_L{}(x)\), die f an diesen Punkten interpoliert,
+wird definiert durch:\cite{lecture17}
+\[S_L{}(x)=f(x_{i-1}) \frac{x - x_i}{x_{i-1}-x_i} + f(x_i) \frac{x - x_{i-1}}{x_i - x_{i-1}}\]
+wobei \(x \in [x_{i-1},x_i],i = 1,2,\dots,n\)
+\end{filecontents*}
+
+\begin{filecontents*}[overwrite]{../../../shared/texts/theorie1.tex}
+Lass p(x) das lineare Polynom sein, das f(x) bei x1 und x2 interpoliert.
+Dann:
+\[E_p = f(x) - p(x)= \frac{f''(\varepsilon)}{2} (x-x1)(x-x2)\] wobei
+\(x1 \leq \varepsilon \leq x2\) und,\[|E_p| \leq C h^2 \hspace{2em} ,h=x2 - x1\]
+\end{filecontents*}
+
+\begin{filecontents*}[overwrite]{../../../shared/texts/theorie2.tex}
+Eine Funktion ist f auf \([a, b]\) \textbf{absolut kontinuierlich} ist, wenn ihre Ableitung fast unbegrenzt ist überall in  \([a, b]\) ,ist integrierbar auf \([a, b]\) und erfüllt:
+\[\int_x^a v'(s) dx = v(x)-v(a) ,a \leq x\leq b\]
+\end{filecontents*}
+
+\begin{filecontents*}[overwrite]{../../../shared/texts/accuracy.tex}
+Wenn  \(h_i=x_i -x_i-1\), dann erreicht die Funktion \((x-x_i)(x-x_i-1)\)
+ihren maximalen absoluten Wert bei \(\frac{x_i+x_i-1}{2}\), mit einem
+Maximalwert von \(\frac{h_i^2}{4}\). Sei \(h=max_{1\leq i\leq n} h_i\)
+definieren, dann:\[ \lVert \mathbf{f-S_L} \rVert \leq \frac{1}{8}h^2 
+\lVert \mathbf{f''} \rVert  \implies \lVert \mathbf{E_p} \rVert \leq \frac{1}{8}h^2 
+\lVert \mathbf{f''} \rVert \]
+\end{filecontents*}
+
+\begin{filecontents*}[overwrite]{../../../shared/texts/herleitung_01.tex}
+Der allgemeine Hermite-Spline-Stücks , die hier ein Polynom des Grades 
+3 ist:\(hm_{i−1}+4hm_i+hm_{i+1}=u_i\)
+wobei \(u_i=\frac{6}{x_{i+1}-x_i}(y_{i-1}-2y_i+y_{i+1})\)
+für \(i \in [0 ,n-2]\)
+\end{filecontents*}
+
+\begin{filecontents*}[overwrite]{../../../shared/texts/herleitung_02.tex}
+\begin{equation*}
+\begin{split}
+S_i &= y_i + (\frac{1}{2}y_{i-1}+\frac{1}{2}y_{i+1})t \\
+&+ (y_{i-1}-\frac{5}{2}+2y_{i+1}-\frac{1}{2}y_{i+2})t^2 \\
+&+ (-\frac{1}{2}y_{i-1}+\frac{3}{2}y_i-\frac{3}{2}y_{i+1}+\frac{1}{2}y_{i+2})t^3
+\end{split}
+\end{equation*}
+\end{filecontents*}
+
+\begin{filecontents*}[overwrite]{../../../shared/texts/herleitung_03.tex}
+Sei \(f(t)\) eine Funktion,die auf einem Intervall \([a , b]\) definiert 
+wird, und seien \(x_0,x_,\dots,x_{n + 1}\) eindeutige Punkte in \([a,b]\), 
+wobei :  \(a = x_0 \leq x_1 \leq \dots \leq x_n = b\).
+\end{filecontents*}
+
+\begin{filecontents*}[overwrite]{../../../shared/texts/CondCubic.tex}
+Eine der folgenden Randbedingungen gewählt werden kann:
+\(s''(a)=s''(b)=0\), was als natürliche Randbedingungen bezeichnet wird.\\
+\(s'(a)=f'(a) , s'(b)=f'(b)\), genannt die Bedingungen an den festgelegten
+Grenzen.
+\end{filecontents*} 
+
+\begin{filecontents*}[overwrite]{../../../shared/texts/accuracyCubic.tex}
+Ein Spline ist eine flexible Kurvenziehhilfe, die entwickelt wurde, um 
+eine Kurve zu erzeugen \(y=v(x) \hspace{2em},x \in [a,b]\) durch 
+vorgeschriebene Punkte in der Weise, dass die Menge 
+\[ \int_{a}^{b} \frac{\lvert v''(x)^2 \rvert}{(1 +  \lvert v'(x) \rvert^2)^3}  \,dx \]
+\noindent wird über alle Funktionen minimiert, die durch die gleichen 
+Punkte gehen, was der Fall ist, wenn die Krümmung auf [a, b] klein ist.\cite{Accuracy}
+\end{filecontents*}
+
+\begin{filecontents*}[overwrite]{../../../shared/sources/Hermite.py}
+\lstinputlisting[language=python]{../../../shared/sources/SplineHermit.py}
+\end{filecontents*}
+
+\begin{filecontents*}[overwrite]{../../../shared/sources/Catmull.py}
+\lstinputlisting[language=python]{../../../shared/sources/Catmull-Rom.py}
+\end{filecontents*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{../../../shared/switch-cfg}
+% in dieser Datei werden Kommandos zum Umschalten zwischen verschiedenen
+% Zielformaten (Buch, Report, Artikel, ...)
+
+\input{../../../shared/thesis-cfg}
+% in dieser Datei werden alle Zusatzpakete mittels
+% \usepackage{<package>} geladen
+
+\pgfplotsset{ymin=-10, ymax=45,
+	xtick distance=2,
+	ytick distance=10
+}
+
+\begin{document}
+
+	% Die unterschiedlichen Größen der Zielformate bedingen, dass
+	% Skalierungsfaktoren definiert werden müssen
+	\ifthenelse{\boolean{isPoster}}{%
+		\def\myScaleFactor{1.0}       % Zur Skalierung der Plots
+		\def\myPlotWidth{15}          % Legt die Breite einer Achse fest (in cm)
+		\def\myPgfFactor{3}           % Legt den Skalierungsfaktor für ein
+									  % tikzpicture fest
+		\input{../../../shared/texts/quad_gl_poster}
+	}{%
+		\mode<all>{                   % wg. ignorenonframetext!
+			\def\myScaleFactor{1.0}
+			\def\myPlotWidth{4.5}         % Legt die Breite einer Achse fest (in cm)
+			\def\myPgfFactor{1}           % Legt den Skalierungsfaktor für ein
+			% tikzpicture fest
+		}
+		\mode<presentation>{%
+			\def\myScaleFactor{0.75}
+		}
+
+		\frontmatter                    % es wird mit kleinen, römischen Zahlen
+		% gezählt
+		
+		
+		\begin{frame}
+			\input{../../../shared/texts/titel_quad_gl} % die selbst entworfene
+			% Titelseite und alternativ
+			% die automatisch erzeugte
+			% Titelseite, dies erfordert
+			% die Angabe des Autors und des
+			% Titels in den Einstellungen,
+			% kann für eine Bachelor-, ...
+			% Arbeit nicht benutzt werden!
+		\end{frame}
+		
+		% Die Zusammenfassung erscheint auf einer eigenen Seite
+		\ifthenelse{\not \boolean{isBook}}{%
+			\begin{abstract}              % die abstract-Umgebung gibt es
+				% nicht in der scrbook-Klasse!
+				Dieser Bericht behandelt die digitale Interpolation für Computerentwickler und führt eine Familie von Interpolationssplines ein. Zu diesem Zweck transkribieren die Algorithmen die vorgestellten Interpolationstechniken. Die Implementierungssprache wird Python sein.\\
+				Es wird jedoch davon ausgegangen, dass der Leser bereits mit den wichtigsten Techniken der Funktionsmanipulation vertraut ist und bereits Begriffe wie Kontinuität, Ableitbarkeit und in geringerem Maße Vektorräume und Matrixberechnung kennt.\\
+				Hier wird eine Familie von Interpolationssplines vorgestellt, die die meisten Spline-Typen aufweisen und daher auch in Anwendungen, die die zukünftigen Punkte nicht kennen, glatte Interpolationskurven erzeugen können, ohne die Notwendigkeit komplexerer Berechnungsmethoden. 
+				So ermöglichen die Drei-Punkt-Splines eine größere Einstellfreiheit und können so an die Anwendung in Reichweite angepasst werden. Zum Beispiel an eine gewünschte Krümmung oder an Beschleunigungs und Verzögerungsbeschränkungen.\\
+				Die Genauigkeit einiger Spline-Typen wird untersucht, sowie Beispiele, die zeigen, wie die Spline-Interpolation erfolgt.
+			\end{abstract}
+		}{}
+		
+		\begin{frame}
+			\tableofcontents
+		\end{frame}
+		
+		\mainmatter   
+		
+		% Umschaltung auf arabische Ziffern
+		\section{Einleitung}   
+		\label{chap:intro} 
+		Interpolation ist eines der grundlegenden Probleme der numerischen Analyse mit Anwendungen sowohl in der Technik mit der Finite-Elemente-Methode, in der Statistik und auch in der Informatik, insbesondere in der Computergrafik (Computer Graphics).\\
+		Der Hauptzweck der Interpolation besteht darin, Benutzern, seien es Wissenschaftler, Fotografen, Ingenieure oder Mathematiker, zu helfen, festzustellen, welche Daten außerhalb ihrer gesammelten Daten existieren können. Außerhalb des mathematischen Bereichs wird Interpolation häufig verwendet, um Bilder zu skalieren und die Abtastrate von digitalen Signalen zu konvertieren.\\
+		Im Kontext der Computeranimation zum Beispiel besteht die Interpolation darin, Rahmen zwischen Schlüsselrahmen zu klopfen oder auszufüllen.Oder im Bereich der digitalen Signalverarbeitung bezeichnet der Begriff Interpolation den Prozess der Umwandlung eines digitalen Abtastsignals (z. B. eines abgetasteten Audiosignals) zu einer höheren Abtastrate unter Verwendung verschiedener digitaler Filtertechniken.\\
+		Viele dieser Anwendungen werden in Echtzeit mit Einschränkungen der Rechenkomplexität ausgeführt, wodurch die erforderlichen kostengünstigen, kontinuierlichen und schleifenfreien Dateninterpolationstechniken in Echtzeit unterstützt werden. \\
+		In der Technik und Wissenschaft gibt es oft eine Reihe von Datenpunkten, die durch Stichproben oder Experimente erhalten werden und die Werte einer Funktion für eine begrenzte Anzahl von Werten der unabhängigen Variablen darstellen. Oft ist es notwendig zu interpolieren, d.h. den Wert dieser Funktion für einen Zwischenwert der unabhängigen Variablen zu schätzen.\\
+		Es wird gezeigt, dass optimale Näherungen für eine große Klasse von Kriterien Spline-Funktionen sind, und dass eine Unterklasse davon resistent gegen das Vorhandensein von groben Fehlern in den Daten ist.
+		
+		\section{Interpolation }   % Einleitung, Hauptteil und Schluss
+		% dürfen niemals in der fertigen Arbeit
+		% stehen, da muss die Autorin bzw. der Autor
+		% sich etwas Passendes einfallen lassen.
+		
+		\subsection{Definition}
+		\begin{frame}
+			
+			\begin{definition}[Interpolation]\label{def:def1}
+				\onslide<+->%	
+				Eine Definition wäre zu sagen, dass die Interpolation eine mathematische Operation ist, bei der eine Funktion bestimmt wird, deren repräsentative Kurve durch die Anfangspunkte verläuft. Diese Funktion wird als Interpolationsfunktion oder Interpolationsfunktion bezeichnet. 
+			\end{definition}
+		\end{frame}
+		
+		Der Zweck der Interpolationsfunktion besteht darin, sich einer unbekannten Funktion zu nähern oder eine Kurve oder Funktion durch eine einfachere Kurve (oder Funktion) zu ersetzen, deren repräsentative Kurve ebenfalls durch die Anfangspunkte verläuft.
+		Je nach Art der Interpolation kann zusätzlich zur Auswahl von Startpunkten (oder -werten) auch die Kurve oder die konstruierte Funktion aufgefordert werden, zusätzliche Eigenschaften zu überprüfen.
+		\noindent Genauer gesagt besteht das Problem darin, unter Berücksichtigung von Paaren\((x_i,y_i)\) eine Funktion \(\Phi = \Phi(x)\) wie \(\Phi(x_i) =y_i\) für \(i= 0,\dots,n\) zu finden. 
+		Es wird dann gesagt , dass \(y_i\) interpoliert \(x_i\).
+		
+		
+		
+		\subsection{Zweck}
+		\begin{frame}
+			Zweck der Interpolation ist es, einen Satz von Werten an vorgegebenen Positionen mit neuen plausiblen Werten im Einklang mit den bereits vorhandenen Werten zu ergänzen.
+			
+			\noindent Alle Positionen und Anfangswerte werden durch folgende Punkte dargestellt \cref{fig:nuagedepoints}:
+		\end{frame}
+		\begin{frame}
+			\begin{figure}[htb]
+				\centering
+				\input{../../../shared/figures/nuagedepoints}
+				\mode<article>{
+					\caption{nuagedepoints}
+					\label{fig:nuagedepoints}
+				}
+			\end{figure}
+			Eine Interpolation könnte hier darin bestehen, für eine gegebene Position, Z.B. x=0.5, einen y-Wert zu bestimmen.
+		\end{frame}
+		
+		
+		
+		\subsection{Arten von Interpolationstechniken}
+		\begin{frame}
+			
+			Für die Interpolation stehen zahlreiche Techniken zur Verfügung. Diese Techniken sind nachstehend aufgeführt:
+			\begin{itemize}
+				\item Interpolation des Unterschieds von Newton.
+				\item Interpolation der Differenz hinter Newton.
+				\item Interpolation der geteilten Differenz von Newton.
+				\item Technik der Interpolation Lagrange.
+				\item Interpolation von Splines.
+			\end{itemize}
+		\end{frame}
+		\noindent Das Verhalten der Datenpunkte hilft bei der Entscheidung, welche Technik ausgewählt werden soll. Sind die Datenpunkte gleich weit voneinander entfernt, kann jede dieser Interpolationstechniken angewandt werden. Aber wenn die Datenpunkte nicht gleichmäßig entfernt sind, dann können Lagrange, Spline oder Interpolationstechnik verwendet werden.
+		
+		
+		\subsection{Interpolation VS Approximation}
+		\begin{frame}
+			
+			\begin{itemize}
+				\item Approximation :
+			\end{itemize}
+			
+			Im Falle der Annäherung ist es normalerweise nicht mehr notwendig, genau durch die ursprünglich spezifizierten Punkte zu gehen. Hier ist die Ordnung des angepassten Polynoms viel kleiner als die Anzahl der Datenpunkte. 
+			Die Koeffizienten des Polynoms werden durch Anwendung eines Prinzips wie der Minimierung der Summe der Fehlerquadrate bestimmt ( Least squares criteria ).
+			
+			\begin{itemize}
+				\item Interpolation:
+			\end{itemize}
+			Es besteht in der Suche nach der Funktion, die einer bestimmten Funktion nach bestimmten Kriterien am nächsten kommt.
+			Ein interpolierendes Polynom durchläuft alle Datenpunkte. Ein Polynom der Ordnung n durchläuft n Datenpunkte.
+			
+		\end{frame}
+		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\section{Lineare interpolierende Splines}
+		\subsection{Lineare interpolation}
+		
+		\begin{frame}
+			\frametitle{Lineare interpolation}		
+			Lineare Interpolation ist die einfachste Methode, da Linien zwischen zwei benachbarten Punkten verwendet werden. Eine Reihe von numerischen Punkten und Funktionswerten an diesen Punkten werden angegeben. Die Aufgabe besteht darin, den angegebenen Betrag zu verwenden und den Wert der Funktion an verschiedenen Punkten anzunähern. Das heißt, gegeben \(x_i\) wo \(i=1,\dots,n\),die Aufgabe ist es f(x) zu schätzen.
+			Die lineare Spline \(s_L{}(x)\), die f an diesen Punkten interpoliert, wird definiert durch:\cite{lecture17}
+			\[S_L{}(x)=f(x_{i-1}) \frac{x - x_i}{x_{i-1}-x_i} + f(x_i) \frac{x - x_{i-1}}{x_i - x_{i-1}}\] wobei \(x \in [x_{i-1},x_i],i = 1,2,\dots,n\)
+		\end{frame}
+		
+		
+		\subsection{Interpolationsfehler bei Lineare interpolierende Splines}
+		
+		\subsubsection{Kontinuität}
+		\begin{frame}
+			\frametitle{Kontinuität}
+			Eine Funktion ist f auf \([a, b]\) \textbf{absolut kontinuierlich} ist, wenn ihre Ableitung fast unbegrenzt ist überall in  \([a, b]\) ,ist integrierbar auf \([a, b]\) und erfüllt:
+			\[\int_x^a v'(s) dx = v(x)-v(a) ,a \leq x\leq b\]
+			
+			\begin{itemize}                
+				\item \textbf{Hinweis}:
+				Jede kontinuierlich differenzierbare Funktion ist absolut kontinuierlich, aber das Gegenteil ist nicht unbedingt wahr.
+			\end{itemize}
+		\end{frame}
+		
+		
+		\subsubsection{Sobolev-Räume}
+		\begin{frame}
+			\frametitle{Sobolev-Räume}
+			Der Raum \(H_1[a,b]\) ist die Menge aller absolut kontinuierliche Funktionen auf \([a, b]\), deren Derivate zu \(L^2(a,b)\) gehören.
+			Dann, für \(k \geq 1\) ,\(H_k[a,b]\) ist die Teilmenge von \(H_{k-1}[a,b]\) bestehend aus Funktionen, deren \((k-1)\)te Ableitungen absolut kontinuierlich sind und deren k-te-Ableitungen zu \(L^2(a,b)\) gehören.Wenn wir mit \(C^k[a,b]\) die Menge der auf \([a, b]\) definierten Allfunktionen bezeichnen, die k-mal kontinuierlich differenzierbar sind, dann ist \(C^k[a,b]\) eine richtige Teilmenge von \(H^k[a,b]\). Zum Beispiel gehört jeder lineare Spline zu \(H^1[a,b]\), gehört aber nicht generell zu \(C^1[a,b]\).\cite{sobolev} \footnote{Es wrde nach Sergei Lwowitsch Sobolew gennant, bei einer Transliteration und in englischer Transkription Sobolev}
+			
+			\begin{itemize}                
+				\item \textbf{Beispiel}:
+				Die Funktion \(f(x)=x^\frac{3}{4}\) gehört zu \(H^1(0, 1)\), weil \(f'(x)=\frac{3}{4} x^\frac{-1}{4}\) auf [0,1] integrierbar ist.
+				Jedoch \(f \notin C^1[a,b]\), weil \(f'(x)\) singular bei \(x= 0\) ist. 
+			\end{itemize}
+		\end{frame}
+		
+		\begin{frame}
+			\frametitle{Sobolev-Räume}
+			\begin{lemma}
+				Lassen Sie die Funktionswerte f1 und f2 Fehler haben \(|f_i| \leq \varepsilon\). Wenn lineare Interpolation verwendet wird, ist die Fehlerschätzung: \[E \leq \varepsilon\]
+			\end{lemma}
+		\end{frame}
+		\begin{frame}
+			\frametitle{Sobolev-Räume}
+			\begin{theorem}\cite{sobolev}
+				Lass p(x) das lineare Polynom sein, das f(x) bei x1 und x2 interpoliert. Dann:
+				\[E_p = f(x) - p(x)= \frac{f''(\varepsilon)}{2} (x-x1)(x-x2)\] wobei \(x1 \leq \varepsilon \leq x2\) und,
+				\[|E_p| \leq C h^2 \hspace{2em} ,h=x2 - x1\]
+			\end{theorem}
+		\end{frame}
+		
+		
+		\begin{frame}
+			Nun, wenn \(f \in C^2(0,1)\), dann für \(i = 1, 2,\dots,n\) : 
+			\[f(x)-S_L(x)=\frac{f''(\varepsilon)}{2}(x-x_i-1)(x-x_i)\]
+			Wenn  \(h_i=x_i -x_i-1\), dann erreicht die Funktion \((x-x_i)(x-x_i-1)\) ihren maximalen absoluten Wert bei \(\frac{x_i+x_i-1}{2}\), mit einem Maximalwert von \(\frac{h_i^2}{4}\). Sei \(h=max_{1\leq i\leq n} h_i\) definieren, dann:\[ \lVert \mathbf{f-S_L} \rVert \leq \frac{1}{8}h^2 
+			\lVert \mathbf{f''} \rVert  \implies \lVert \mathbf{E_p} \rVert \leq \frac{1}{8}h^2 
+			\lVert \mathbf{f''} \rVert \]
+		\end{frame}
+		
+		\subsubsection{Anwendung der linearen Spline Interpolation}
+		\begin{frame}
+			\frametitle{Anwendung der linearen Spline Interpolation}
+			Basierend auf den folgenden Daten besteht die Aufgabe darin, die Werte von \(y(62)\) mithilfe der linearen Interpolation von Spline zu finden.
+			
+			\begin{table}[htb]
+				\centering
+				\caption{x und y Daten}
+				\label{tab:Data}
+				\begin{tabular}{*{6}{p{1.7em}}}
+					\toprule%
+					x & 22 & 42 & 52 & 82 & 100 \\\midrule
+					y & 4181 & 4178 & 4186 & 4199 & 4217  \\\bottomrule
+				\end{tabular}
+			\end{table}
+			
+			\noindent Aus den Daten der Tabelle \(62 \in [52,82]\).Also \(x_0=52\) ,\(y_0=f(x_0)=4186\) und \(x_1=82\) ,\(y_1=f(x_1)=4199\). 
+			Unser linearer Spline in die Form kommt: 
+			\[S_L{}(x)=f(x_{0}) \frac{x - x_1}{x_{0}-x_1} + f(x_1) \frac{x - x_{1}}{x{1} - x_{0}} \]
+			\[\implies S_L{}(x)=y_0 \frac{x - x_1}{x_{0}-x_1} + y1 \frac{x - x_{1}}{x_1 - x_{0}}\]
+		\end{frame}
+		\begin{frame}
+			\frametitle{Anwendung der linearen Spline Interpolation}
+			Für \(x=62\):
+			
+			
+			\begin{align*}
+				&S_L{}(x)=4186 \frac{62 - 82}{52-82} + 4199 \frac{62 - 82}{82 - 52} \\
+				& =4189,9\\
+			\end{align*}
+			
+			\begin{itemize}                 % Listenumgebungen werden später behandelt
+				\item \textbf{Bemerkung}:
+			\end{itemize}
+			Der y-Wert muss immer zwischen \(y_0\) und \(y_1\) liegen.
+		\end{frame}
+		
+		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		
+		\section{Splin Cubic}% durch dieses %-Zeichen wird
+		\label{chap:verf-los}           % Leerraum vermeiden, der zu einer
+		% falschen Nummerierung führen kann
+		% \label: setzt eine Marke,
+		% auf die ich mich an andere Stelle
+		% beziehen kann.
+		
+		\subsection{Splinen von Hermite}
+		\begin{frame}
+			\frametitle{Splinen von Hermite}
+			
+			\onslide<1->Hermite-Splines sind eine Familie von kubischen Splines, die zur Klasse \(C^1\) im Intervall \([x_0; x_n]\) gehören.
+			Entweder der Variablenwechsel nach \(t=\frac{x-x_i}{x_{i+1}-xi}\). Auf diese Weise kann eine Funktion \(s_i(t)\) im Bereich [0, 1] erhalten werden, die der Funktion \(f_i(x)\) im vierten Teilintervall \([x_i; x_{i+1}]\) entspricht.\cite{Hermite}
+			Der allgemeine Ausdruck eines Spline-Stücks und seiner ersten Ableitung, die hier ein Polynom des Grades 3 ist:
+			\begin{align*}
+				& S_i(t)=a_{i,0}+a_{i,1}t_i+a_{i,2}t_i^2+a_{i,3}t_i^3\\
+				& S_i'(t)=a_{i,1}+2a_{i,2}t_i+3a_{i,3}t_i^2\\
+			\end{align*}
+		\end{frame}
+		
+		
+		
+		In t=0 sind die Werte von si(t) und seiner Ableitung:
+		\begin{align*}
+			& S_i(0)=a_{i,0}\\
+			& S_i'(0)=a_{i,1}\\
+		\end{align*}
+		
+		Und in t=1 sind die Werte von \(s_i(t)\) und seiner Ableitung:
+		\begin{align*}
+			& S_i(1)=a_{i,0}+a_{i,1}+a_{i,2}+a_{i,3}\\
+			& S_i'(1)=a_{i,1}+2a_{i,2}+3a_{i,3}\\
+		\end{align*}
+		
+		Die vier Koeffizienten \(a_{i,0}, a_{i,1}, a_{i,2}\) und \(a_{i,3}\) unseres Spline-Stücks sind also:
+		\begin{equation*}
+			\begin{cases}
+				a_{i,0} =S_i(0)  \\
+				a_{i,1} =S_i'(0) \\
+				a_{i,2} =-3S_i(0)+3S_i(1)-2S_i'(0)-S_i'(1) \\
+				a_{i,3} =2S_i(0)-2S_i(1)+S_i'(1)+S_i'(0)
+			\end{cases}
+		\end{equation*}
+		
+		Unter Verwendung der Interpolationsbedingungen \((m_i=S_i(0)\) und \(m_{i+1}=S_i(1))\):
+		\begin{equation*}
+			\begin{cases}
+				a_{i,0} =y_i \\
+				a_{i,1} =m_i \\
+				a_{i,2} =-3y_i+3y_{i+1}-2m_i-m_{i+1} \\
+				a_{i,3} =2y_i-2y_{i+1}+m_i+m_{i+1}
+			\end{cases}
+		\end{equation*}
+		
+		
+		
+		\begin{frame}
+			\onslide<1->Die Matrixdarstellung ist wie folgt:
+			
+			\ifthenelse{\not \boolean{isArticleTC}}{   
+				\[
+				S_i(t) =
+				\begin{pmatrix}
+					1 & t & t^2 & t^3\\
+				\end{pmatrix}
+				\times
+				\begin{pmatrix}
+					1 & 0 & 0 & 0\\
+					0 & 0 & 1 & 0\\
+					-3 & 3 & -2 & -1\\
+					2 & -2 & 1 & 1\\
+				\end{pmatrix}
+				\times
+				\begin{pmatrix}
+					y_i \\
+					y_{i+1}\\
+					m_i\\
+					m_{i+1}\\
+				\end{pmatrix}
+				\]
+			}{
+				\begin{align}
+					S_i(t) =
+					\begin{pmatrix}
+						1 & t & t^2 & t^3
+					\end{pmatrix}
+					\times\\
+					\begin{pmatrix}
+						1 & 0 & 0 & 0\\
+						0 & 0 & 1 & 0\\
+						-3 & 3 & -2 & -1\\
+						2 & -2 & 1 & 1\\
+					\end{pmatrix}
+					\times
+					\begin{pmatrix}
+						y_i \\
+						y_{i+1}\\
+						m_i\\
+						m_{i+1}\\
+					\end{pmatrix}
+				\end{align}
+			}
+		\end{frame}
+		
+		Aus den Spalten können die Grundfunktionen von Hermite extrahiert werden, um die Polynome des Splines neu zu schreiben.Sei: 
+		\begin{equation*}
+			\begin{cases}
+				h_0(t) =1-3t^2+2t^3 \\
+				h_1(t) =3t^2-2t^3 \\
+				h_2(t) =t-2t^2+t^3 \\
+				h_3(t) =-t^2+t^3
+			\end{cases}
+		\end{equation*}
+		
+		
+		\begin{frame}
+			Dann gilt es: 
+			\[S_i(t)=h_0(t)y_i+h_1(t)y_{i+1}+h_2(t)m_i+h_3(t)m_{i+1}\]
+		\end{frame}
+		
+		Diese Methode ist interessant, da sie die Berechnung von Splines optimiert. das heißt, wenn man sich einen konstanten Schritt gibt, was einer festen Unterteilung des Intervalls [0, 1] der Variablen t entspricht, werden die Werte der Hermite-Grundfunktionen für jeden Schritt nur einmal für einen Teilwert berechnetIntervall i und kann dann für alle anderen Teilintervalle wiederverwendet werden.
+		Die folgende Implementierung der kubischen Spline-Interpolation von Hermite ist eine einfache direkte Transkription von Formeln.
+		
+		\lstset{language=python, caption=Implementierung der kubischen Spline-Interpolation von Hermite, label={lst:SplineHermit}}
+		%\lstinputlisting[language=Python]{../../../shared/sources/SplineHermit.py}
+		
+		\ifthenelse{\boolean{isArticleTC}}{%
+			\lstinputlisting[float=*t]{%    bei zweispaltiger Formatierung soll
+				% der Code einspaltig auf einer eigenen
+				% Seite erscheinen, damit er lesbar
+				% bleibt
+				../../../shared/sources/SplineHermit.py}
+		}{
+			\lstinputlisting{
+				../../../shared/sources/SplineHermit.py}
+		
+		}
+		
+		
+		
+		Die Parameter \(y_0\) und \(y_1\) entsprechen den Knotenwerten in t=0 und t=1.Die Funktion hermiteSpline() gibt die kubische Spline-Interpolation von Hermite in t zurück.
+		
+		
+		
+		
+		\subsection{Kardinale Spline}
+		\begin{frame}
+			\frametitle{Kardinale Spline}
+			Ein kubischer Catmull-Rom-Spline definiert jede Tangente zu einem Knoten i als parallel zur Geraden durch die Knoten i-1 und i+1.\cite{cardinal} Sie wird in folgender Form ausgedrückt:
+			\[m_i=\frac{y_{i+1}-y_{i-1}}{x_{i+1}-x_{i-1}}\]
+			\begin{figure}[htb]
+				\centering
+				\input{../../../shared/figures/splineCardinale}
+				\mode<article>{
+					\caption{Kurve von Catmull-Rom}
+					\label{fig:splineCardinale}
+				}
+			\end{figure}
+			
+			Wenn die Knoten gleichmäßig verteilt sind, vereinfacht sich der Ausdruck und ergibt:
+			\[m_i=\frac{y_{i+1}-y_{i-1}}{2}\]
+			Dadurch ergibt sich ein kubischer Catmull-Rom-Spline mit t im Bereich [0, 1]:
+			
+			\ifthenelse{\not \boolean{isArticleTC}}{
+				\[S_i=y_i+(\frac{1}{2}y_{i-1}+\frac{1}{2}y_{i+1})t+(y_{i-1}-\frac{5}{2}+2y_{i+1}-\frac{1}{2}y_{i+2})t^2+(-\frac{1}{2}y_{i-1}+\frac{3}{2}y_i-\frac{3}{2}y_{i+1}+\frac{1}{2}y_{i+2})t^3\]
+			}{
+				\begin{equation}
+					\begin{split}
+						S_i &= y_i + (\frac{1}{2}y_{i-1}+\frac{1}{2}y_{i+1})t \\
+						&+ (y_{i-1}-\frac{5}{2}+2y_{i+1}-\frac{1}{2}y_{i+2})t^2 \\
+						&+ (-\frac{1}{2}y_{i-1}+\frac{3}{2}y_i-\frac{3}{2}y_{i+1}+\frac{1}{2}y_{i+2})t^3
+					\end{split}
+				\end{equation}
+				
+			}
+		\end{frame}
+		
+		
+		
+		
+		\begin{frame}	
+			Matrixform:
+			
+			\ifthenelse{\not \boolean{isArticleTC}}{   % lange Gleichungen können in
+				% einem zweispaltigen Artikel ausgelassen werden
+				\[
+				S_i(t) = 
+				\begin{pmatrix}
+					1 & t & t^2 & t^3\\
+				\end{pmatrix}
+				\times
+				\begin{pmatrix}
+					0 & 2 & 0 & 0\\
+					-1 & 0 & 1 & 0\\
+					2 & -5 & 4 & -1\\
+					-1 & 3 & -3 & 1\\
+				\end{pmatrix}
+				\times
+				\begin{pmatrix}
+					y_{i-1} \\
+					y_{i}\\
+					y_{i+1}\\
+					m_{i+2}\\
+				\end{pmatrix}
+				\]
+			}{
+				\begin{align}
+					S_i(t) =
+					\begin{pmatrix}
+						1 & t & t^2 & t^3\\
+					\end{pmatrix} \\
+					\times
+					\begin{pmatrix}
+						0 & 2 & 0 & 0\\
+						-1 & 0 & 1 & 0\\
+						2 & -5 & 4 & -1\\
+						-1 & 3 & -3 & 1\\
+					\end{pmatrix} \\
+					\times
+					\begin{pmatrix}
+						y_{i-1} \\
+						y_{i}\\
+						y_{i+1}\\
+						m_{i+2}\\
+					\end{pmatrix}
+				\end{align}
+			}
+		\end{frame}
+		
+		Daher die folgende Implementierung:
+	
+		\lstset{language=python, caption=Implementierung der kubischen Spline-Interpolation von Catmull-Rom, label={lst:Catmull-Rom}}
+			%\lstinputlisting[language=Python]{../../../shared/sources/Catmull-Rom.py}
+			
+			\ifthenelse{\boolean{isArticleTC}}{%
+				\lstinputlisting[float=*t]{%    bei zweispaltiger Formatierung soll
+					% der Code einspaltig auf einer eigenen
+					% Seite erscheinen, damit er lesbar
+					% bleibt
+					../../../shared/sources/Catmull-Rom.py}
+			}{
+				\lstinputlisting{
+					../../../shared/sources/Catmull-Rom.py}
+			}
+			
+		
+		Die Parameter \(y_0, y_1, y_2 und y_3\) entsprechen jeweils den Werten der Knoten \(i-1\), \(i\), \(i+1\) und \(i+2\).Diese Funktion gibt die Interpolation nach dem Catmull-Rom-Spline zurück.
+		Um sich mit ergänzenden imaginären Knoten auszustatten, können mehrere mögliche Vereinbarungen getroffen werden, darunter die folgenden:
+		\begin{enumerate}
+			\item Eine besteht darin, sich einen imaginären Knoten mit dem gleichen Wert wie der benachbarte Knoten zu geben. Das ist wie:
+			\begin{equation*}
+				\begin{cases}
+					y_{n-1} =y_0 \\
+					y_{n+1} =y_n \\
+				\end{cases}
+			\end{equation*}
+			\item Eine andere Konvention besteht darin, einen imaginären Knoten 1 (bzw. n+1) auf der Geraden zu platzieren, die durch die Knoten 0 und 1 (bzw. n) verläuft, so dass der Knoten 0 (bzw. n) die Mitte des Segments mit den Enden der Knoten 1 und 1 ist (n 1 bzw. n+1). Dann:
+			\begin{equation*}
+				\begin{cases}
+					y_{-1}=2y_0−y_1 \\
+					y_{n+1} =2y_n-y_{n-1} \\
+				\end{cases}
+			\end{equation*}
+		\end{enumerate}
+		
+		
+		\subsection{Kubische Splin}
+		\begin{frame}
+			\frametitle{Kubische Splin}
+			
+			\begin{definition}[Cubic Spline]\label{def:def2}
+				Sei \(f(t)\) eine Funktion,die auf einem Intervall \([a , b]\) definiert wird, und seien \(x_0,x_,\dots,x_{n + 1}\) eindeutige Punkte in \([a,b]\), wobei :  \(a = x_0 \leq x_1 \leq \dots \leq x_n = b\). \\
+			\end{definition}
+		\end{frame}
+		
+		
+		Ein kubischer Spline oder kubische Interpolation ist ein Polynom s(x), das folgende Bedingungen erfüllt:
+		\begin{enumerate}
+			\item In jedem Intervall \([x_{i-1}, x_i]\) und für \(i= 1, \dots , n\):\[ s(x) = s_i(x)\] wobei \(s_i(x)\) ein kubisches Polynom ist.
+			\item Für \(i=0,\dots,n\):\hspace{0.7em} \(s(x_i)=f(x_i)\)
+			\item \(s(x)\) ist zweimal kontinuierlich differenzierbar auf (a,b).
+			\item eine der folgenden Randbedingungen gewählt werden kann:
+			\begin{enumerate}
+				\item \(s''(a)=s''(b)=0\), was als natürliche Randbedingungen bezeichnet wird.
+				\item \(s'(a)=f'(a) ,{0.3em} s'(b)=f'(b)\), genannt die Bedingungen an den festgelegten Grenzen.
+			\end{enumerate}
+		\end{enumerate}
+		
+		
+		Wenn \(s(x)\) freie Randbedingungen erfüllt, dann wird \(s(x)\) ein natürlicher Spline genannt. 
+		Jedes Stück \(f_i(x_i)\) des Splines ist ein Polynom des Grades 3 und hat daher 4 unbekannte konstante Koeffizienten \(a_{i,0},a_{i,1},a_{i,2},a_{i,3}\). Es gibt also 4 Unbekannte zu bestimmen.
+		
+		\subsubsection{Konstruktion kubischer Splines}
+		\begin{frame}
+			\frametitle{Konstruktion kubischer Splines}
+			Aufgrund von n+1 Knoten muss der kubische Spline zweimal kontinuierlich über \([x_0,x_n]\) ableitbar sein. 
+			Folgende Eigenschaften müssen überprüft werden:
+			\begin{itemize}
+				\item P1. Für \(i \in 0,[n-1]\) und \(f_{n-1}(x_n)=y_n\) \(f_i(x_i)=y_i\)	 .
+				
+				\item P2. Für \(i \in [0,n-2]\) \(f_i(x_{i+1})=f_{i+1}(x_{i+1})\)
+				
+				\item P3. Für \(i \in [0,n-2]\) \(f'_i(x_{i+1})=f'_{i+1}(x_{i+1})\) .
+				
+				\item P4. Für \(i \in [0,n-2]\) \(f''_i(x_{i+1})=f''_{i+1}=(x_{i+1})\)
+			\end{itemize}
+			
+			Jedes Stück \(f_i(x_i)\) des Splines ist ein Polynom des Grades 3 und hat daher 4 unbekannte konstante Koeffizienten \(a_{i,0},a_{i,1},a_{i,2},a_{i,3}\). Es gibt also 4 Unbekannte zu bestimmen.
+		\end{frame}
+		
+		\textbf{P1} entspricht den Interpolationsbeschränkungen der Knoten. Sie liefert \textbf{n+1} Gleichungen.
+		
+		\textbf{P2,P3 und P4} liefern jeweils \textbf{n-1} Gleichungen. Denn die beiden Knoten an den Enden in \(x_0\) und \(x_n\) sind von der Kontinuität nicht betroffen.
+		
+		Diese Gleichungen können wie folgt geschrieben werden:
+		
+		\begin{equation*}
+			\textbf{(P1)}
+			\begin{cases}
+				a_{0,0} + a_{0,1}x_0 +a_{0,2}x_0^2 +a_{0,3}x_0^3  =  y_0  \\
+				a_{1,0}+a_{1,1}x_1+a_{1,2}x_1^2+a_{1,3}x_1^3  =  y_1 \\
+				... \\
+				a_{n,0}+a_{n,1}x_n+a_{n,2}x_n^2+a_{n,3}x_n^3  =  y_n  \\
+			\end{cases}
+		\end{equation*}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\begin{equation*}
+			\textbf{(P2)}
+			\begin{cases}
+				\ifthenelse{\not \boolean{isArticleTC}}{   % lange Gleichungen können in
+					% einem zweispaltigen Artikel ausgelassen werden
+					a_{0,0} + a_{0,1}x_1 +a_{0,2}x_1^2 +a_{0,3}x_1^3  = a_{1,0}+a_{1,1}x_1+a_{1,2}x_1^2+a_{1,3}x_1^3  \\
+					a_{1,0}+a_{1,1}x_2+a_{1,2}x_2^2+a_{1,3}x_2^3  = a_{2,0}+a_{2,1}x_2+a_{2,2}x_2^2+a_{2,3}x_2^3 \\
+					... \\
+					a_{n-2,0}+a_{n-2,1}x_{n-1}+a_{n-2,2}x_{n-1}^2+a_{n-2,3}x_{n-1}^3  = a_{n-1,0}+a_{n-1,1}x_{n-1}+a_{n-1,2}x_{n-1}^2 \\ \hspace{23em}+a_{n-1,3}x_{n-1}^3  \\
+				}{
+					a_{0,0} + ... +a_{0,3}x_1^3  = a_{1,0}+...
+					+a_{1,3}x_1^3  \\
+					a_{1,0}+...+a_{1,3}x_2^3  = a_{2,0}+...
+					+a_{2,3}x_2^3 \\
+					\ldots \\
+					a_{n-2,0}+\ldots+a_{n-2,3}x_{n-1}^3 = \\
+					a_{n-1,0}+\ldots+a_{n-1,3}x_{n-1}^3  \\}
+			\end{cases}
+		\end{equation*}
+		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\begin{equation*}
+			\textbf{(P3)}
+			\begin{cases}
+				\ifthenelse{\not \boolean{isArticleTC}}{
+					a_{0,1} + 2a_{0,2}x_1 +3a_{0,3}x_1^2  = a_{1,1}+2a_{1,2}x_1+3a_{1,3}x_1^2 \\
+					a_{1,1}+2a_{1,2}x_2+3a_{1,3}x_2^2  = a_{2,1}+a_{2,1}x_2+3a_{2,3}x_2^2 \\
+					... \\
+					a_{n-2,1}+a_{n-2,2}x_{n-1}+3a_{n-2,3}x_{n-1}^2 = a_{n-1,1}+2a_{n-1,2}x_{n-1}+3a_{n-1,3}x_{n-1}^2 \\
+				}{
+					a_{0,1} + \ldots +3a_{0,3}x_1^2= a_{1,1}+\ldots \\
+					\hspace{4cm} +3a_{1,3}x_1^2 \\
+					a_{1,1}+\ldots+3a_{1,3}x_2^2 = a_{2,1}+\ldots\\
+					\hspace{4cm}  +3a_{2,3}x_2^2 \\
+					... \\
+					a_{n-2,1}+...+3a_{n-2,3}x_{n-1}^2 = a_{n-1,1} \\
+					\hspace{2.5cm}+\ldots+3a_{n-1,3}x_{n-1}^2
+				}
+			\end{cases}
+		\end{equation*}
+		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\begin{equation*}
+			\textbf{(P4)}
+			\begin{cases}
+				a_{0,2} + a_{0,3}x_1 = 2a_{1,2} + 6a_{1,3}x_1 \\
+				a_{1,2}+6a_{1,3}x_2  = 2a_{2,2} + 6a_{2,3}x_2 \\
+				... \\
+				\ifthenelse{\not \boolean{isArticleTC}}{2a_{n-2,2}+6a_{n-2,3}x_{n-1} = 2a_{n-1,2}  +6a_{n-1,3}x_{n-1} \\}{
+					2a_{n-2,2}+6a_{n-2,3}x_{n-1} = 2a_{n-1,2} \\
+					\hspace{3.7cm}+ 6a_{n-1,3}x_{n-1} \\
+				}
+			\end{cases}
+		\end{equation*}
+		
+		Wir haben also \((n+1)+3(n-1)=4n-2\) Gleichungen für 4n unbekannt. Um eine einzige Lösung zu haben, fehlen uns zwei Gleichungen für beide Enden in \(x_0\) und \(x_n\). Verwendet daher die Bedingungen in der Definition.
+		Da jedes \(f_i(x)\)-Stück ein Polynom des Grades 3 ist, ist die zweite \(f_i(x)\) Ableitung ein lineares Polynom des Grades 1, das als lineare lagrangische Interpolation zwischen \(x_i\) und \(x_{i+1}\) beschrieben werden kann:
+		\[f''_i(x)=\frac{m_i(x−x_{i+1})}{h}+\frac{m_{i+1}(x−xi)}{h} \hspace{3em}\]
+		wobei  \(m_i=f_i''(x_i)\) und \(h=x_{i+1}-x_i\)
+		Die zweite Ableitung  wird zweimal integriert, um zum Interpolator-Polynom zurückzukehren, erhält man folgenden Ausdruck:
+		
+		\ifthenelse{\not \boolean{isArticleTC}}{
+			
+			\[f_i(x)=A_i(x_{i+1}−x)^3+B_i(x−x_i)^3+C_i(x_{i+1}−x)+D_i(x−x_i)\]}{
+			\begin{align*}
+				f_i(x)&=A_i(x_{i+1}−x)^3+B_i(x−x_i)^3\\
+				&+D_i(x−x_i)
+			\end{align*}
+		}
+		wobei : 
+		\begin{equation*}
+			\begin{cases}
+				A_i  = \frac{m_i}{6h} \\
+				B_i = \frac{m_{i+1}}{6h} \\
+				C_i = \frac{y_i}{h} - \frac{hm_i}{6} \\
+				D_i = \frac{y_{i+1}}{h} - \frac{hm_{i+1}}{6} \\
+			\end{cases}
+		\end{equation*}
+		
+		\(C_i\) und \(D_i\) sind die Integrationskonstanten, die mit den Interpolationsbedingungen \(f_i(x_i)=y_i\) und \(f_i(x_{i+1})=y_{i+1}\) aufgelöst werden (P1).
+		\begin{itemize}
+			\item Werte von \(m_i\):
+		\end{itemize}
+		\(f'i(x)=−3A_i(x_{i+1}−x)^2+3B_i(x−x_i)2−C_i+D_i\) \\
+		Die Bewertung von \(f_i\) und \(f_{i-1}\) in \(x_i\) ergibt:
+		\begin{equation*}
+			\begin{cases}
+				f_i'(x_i)  = \frac{-hm_i}{3}-\frac{h}{6}m_{i+1}+\frac{y_{i+1}-y_i}{h} \\
+				f_{i-1}'(x_i) = \frac{-hm_i}{3}-\frac{hm_i}{6}+\frac{y_{i}-y_{i-1}}{h}\\
+			\end{cases}
+		\end{equation*}
+		
+		Bei Verwendung von P3 ergibt sich daraus:
+		\[hm_{i−1}+4hm_i+hm_{i+1}=u_i\]
+		wobei \(u_i=\frac{6}{h}(y_{i-1}-2y_i+y_{i+1})\) für \(i \in [0 ,n-2]\)
+		
+		
+		\subsubsection{Genauigkeit}
+		\begin{frame}
+			\frametitle{Genauigkeit}
+			\begin{theorem}[Genauigkeit]
+				Wenn \(s_2(x)\) der natürliche kubische Spline für \(f \in C[a,b]\) ist auf \([a,b]\) mit Knoten \(a=x_0 \leq x_1 \leq \dots \leq x_n =b\) und \(v_in H(a,b)\) ist jede Interpolante von mit diesen Knoten, dann \[ \lVert s''_2 \rVert_{2}  \leq \lVert  v'' \rVert_{2}\]
+			\end{theorem}
+		\end{frame}
+		Dies kann auf die gleiche Weise wie das entsprechende Ergebnis für den linearen Spline nachgewiesen werden.
+		Ein Spline ist eine flexible Kurvenziehhilfe, die entwickelt wurde, um eine Kurve zu erzeugen \(y=v(x) \hspace{2em},x \in [a,b]\) durch vorgeschriebene Punkte in der Weise, dass die Menge 
+		\[ \int_{a}^{b} \frac{\lvert v''(x)^2 \rvert}{(1 +  \lvert v'(x) \rvert^2)^3}  \,dx \]
+		\noindent wird über alle Funktionen minimiert, die durch die gleichen Punkte gehen, was der Fall ist, wenn die Krümmung auf [a, b] klein ist.\cite{Accuracy}
+		
+		
+		\subsubsection{Erstellen einer kubischen Spline Interpolant}
+		\begin{frame}
+			\frametitle{Erstellen einer kubischen Spline Interpolant}
+			Ziel ist es, den natürlichen kubischen Spline zu finden, der die Punkte (1,1), (2,12), (3,13) und (4,14) interpoliert.
+		\end{frame}
+		
+		
+		\begin{enumerate}
+			\item Es gibt n=4 verschiedene Punkte. Erste Lösung für die m’s, das heißt, das folgende Gleichungssystem zu lösen:
+			
+			\begin{equation*}
+				\begin{cases}
+					\ifthenelse{\not \boolean{isArticleTC}}{
+						m_1=m_4=0 \\
+						\frac{1}{6}(x_2−x_1)m_1+\frac{1}{3}(x_3−x_1)m_2+\frac{1}{6}(x_3−x_2)m_3=\frac{y_3−y_2}{x_3−x_2}−\frac{y_2−y1}{x_2−x_1} \\
+						\frac{1}{6}(x_3−x1)m_2+\frac{1}{3}(x_4−x_2)m_3+\frac{1}{6}(x_4−x_3)m_4=\frac{y_4−y_3}{x_4−x_3}−\frac{y_3−y_2}{x_3−x_2} \\
+						Dies entspricht der Lösung des Systems für M2 und M3:
+						\frac{1}{3}(x_3−x_1)m_2+\frac{1}{6}(x_3−x_2)m_3=\frac{y_3−y_2}{x_3−x_2}−\frac{y_2−y1}{x_2−x_1} \\
+						\frac{1}{6}(x_3−x_1)m_2+\frac{1}{3}(x_4−x_2)m_3=\frac{y_4−y_3}{x_4−x_3}−\frac{y_3−y_2}{x_3−x_2} \\
+					}{\frac{1}{3}(x_3−x_1)m_2+\frac{1}{6}(x_3−x_2)m_3= \\ \frac{y_3−y_2}{x_3−x_2}−\frac{y_2−y1}{x_2−x_1} \\
+						\frac{1}{6}(x_3−x_1)m_2+\frac{1}{3}(x_4−x_2)m_3= \\ \frac{y_4−y_3}{x_4−x_3}−\frac{y_3−y_2}{x_3−x_2} \\}
+					
+				\end{cases}
+			\end{equation*}
+			
+			
+			\item Ersetztung der Werte von x und y:
+			\begin{equation*}
+				\begin{cases}
+					\frac{1}{3}(3−1)m_2+\frac{1}{6}(3−2)m_3=\frac{\frac{1}{3}−\frac{1}{2}}{3-2}-\frac{\frac{1}{2}−1}{2-1}  \\
+					\frac{1}{6}(3-2)m_2+\frac{1}{3}(4-2)m_3=\frac{\frac{1}{4}−\frac{1}{3}}{4-3}-\frac{\frac{1}{3}−\frac{1}{2}}{3-2} \\
+				\end{cases}
+			\end{equation*}
+			
+			
+			Dieses System vereinfachen :
+			\begin{equation*}
+				\begin{cases}
+					\frac{2}{3}m_2+\frac{1}{6}m_3=\frac{1}{3}  \hspace{2em}  \textbf{(1)}\\
+					\frac{1}{6}m_2+\frac{2}{3}m_3=\frac{1}{12} \hspace{1.7em}  \textbf{(2)}\\
+				\end{cases}
+			\end{equation*}
+			
+			\item Finden \(m_2\) und \(m_3\):
+			
+			\begin{align*}
+				\textbf{(2):} \hspace{2em}	& \frac{1}{6}m_2+\frac{2}{3}m_3=\frac{1}{12} \\
+				\Leftrightarrow & \frac{1}{6}m_2=\frac{1}{12}−\frac{2}{3}m_3 \\
+				\Leftrightarrow & m_2=\frac{1}{2}−4m_3 \\
+			\end{align*}
+			
+			Ersetzung dies in die erste Gleichung und Lösung für \(m_3\):
+			
+			\begin{align*}
+				\textbf{(1):} \hspace{2em}	& \frac{2}{3}m_2+\frac{1}{6}m_3=\frac{1}{3} \\
+				\Leftrightarrow & \frac{2}{3}(\frac{1}{2}−4m_3)+\frac{1}{6}m_3=\frac{1}{3} \\
+				\Leftrightarrow & \frac{1}{3}−\frac{8}{3}m_3+\frac{1}{6}m_3=\frac{1}{3} \\
+				\Leftrightarrow & 2−16m_3+m_3=2 \\
+				\Leftrightarrow & m_3=0 \\
+			\end{align*}
+			Ersetzung dies in \textbf{(1)} und Lösung für \(m_2\):
+			\textbf{(1):} \hspace{2em} \(m_2=\frac{1}{2}\)
+			
+			\item Den kubischen Spline in den entsprechenden Intervallen konstruieren:
+			In dem Intervall [1,2]:
+			\begin{align*}
+				\ifthenelse{\not \boolean{isArticleTC}}{
+					& 	s(x)=\frac{(x_2−x)^3m_1+(x−x_1)^3m_2}{6(x_2−x_1)}+\frac{(x_2−x)y_1+(x−x_1)y_2}{x_2−x_1}\\
+					& −\frac{1}{6}(x_2−x_1)((x_2−x)m_1+(x−x_1)m_2) \\
+					\Leftrightarrow & s(x)=\frac{(x-1)^3\frac{1}{2}}{6(2-1)}+\frac{(2−x)+(x-1)\frac{1}{2}}{2-1}-\frac{1}{6}(2-1)((x-1)\frac{1}{2})\\
+				}{
+					s(x) &= \frac{(x_2−x)^3m_1+(x−x_1)^3m_2}{6(x_2−x_1)} \\
+					&\quad +\frac{(x_2−x)y_1+(x−x_1)y_2}{x_2−x_1} \\
+					&\quad −\frac{1}{6}(x_2−x_1)((x_2−x)m_1 \\
+					&\quad +(x−x_1)m_2) \\
+					\Leftrightarrow & =\frac{(x-1)^3\frac{1}{2}}{6(2-1)}+\frac{-\frac{x}{2}+\frac{3}{2}}{2-1}\\
+					&\quad -\frac{1}{6}(2-1)((x-1)\frac{1}{2})}
+			\end{align*}
+			
+			In dem Intervall [2,3]:
+			\begin{align*}
+				\ifthenelse{\not \boolean{isArticleTC}}{
+					s(x) &= \frac{(x_3−x)^3m_2+(x−x_2)^3m_3}{6(x_3−x_2)}+\frac{(x_3−x)y_2+(x−x_2)y_3}{x_3−x_2}\\
+					& −\frac{1}{6}(x_3−x_2)((x_3−x)m_2+(x−x_2)m_3) \\
+					\Leftrightarrow & =\frac{(3−x)^3\frac{1}{2}}{6(3−2)}+\frac{(3−x)\frac{1}{2}+(x-2)\frac{1}{3}}{3-2}-\frac{1}{6}(3-2)((3-x)\frac{1}{2})\\}
+				{
+					s(x) &=\frac{(3−x)^3\frac{1}{2}}{6(3−2)}\\ &\quad +\frac{(3−x)\frac{1}{2}+(x-2)\frac{1}{3}}{3-2} \\&\quad -\frac{1}{6}(3-2)((3-x)\frac{1}{2})\\
+				}
+			\end{align*}
+			
+			In dem Intervall [3,4]:
+			\begin{align*}
+				\ifthenelse{\not \boolean{isArticleTC}}{
+					s(x) &=\frac{(x_4−x)^3m_3+(x−x_3)^3m_4}{6(x_4−x_3)}+\frac{(x_4−x)y_3+(x−x_3)y_4}{x_4−x_3}\\
+					& −\frac{1}{6}(x_4−x_3)((x_4−x)m_3+(x−x_3)m_4) \\
+					\Leftrightarrow & =\frac{(4−x)\frac{1}{3}+(x-3)\frac{1}{4}}{(4−3)}\\}
+				{s(x)=\frac{(4−x)\frac{1}{3}+(x-3)\frac{1}{4}}{(4−3)}\\}
+			\end{align*}
+		\end{enumerate}
+		
+		\begin{frame}
+			\frametitle{Erstellen einer kubischen Spline Interpolant}
+			Finale cubische Splin : 
+			\begin{equation*}
+				S(x) = 
+				\begin{cases}
+					\frac{(x-1)^3}{12}+\frac{19}{12}-\frac{7x}{12} \hspace{2em} x \in [1,2] \\
+					\frac{(3−x)^3}{12}+\frac{7}{12}-\frac{x}{12}\hspace{2em} x \in [2,3] \\
+					(4−x)\frac{1}{3}+(x-3)\frac{1}{4} \hspace{1em} x \in [3,4] 
+				\end{cases}
+			\end{equation*}
+			
+		\end{frame}
+		
+			\section{Zusammenfassung und Ausblick}
+		
+		\begin{frame}
+			\frametitle{Zusammenfassung und Ausblick}
+			Zusammenfassend lässt sich sagen, dass Spline-Funktionen eine wertvolle Methode zur Interpolation von Daten darstellen. Sie können verwendet werden, um glatte Kurven durch eine Reihe von Datenpunkten zu zeichnen und so die Struktur der Daten besser zu verstehen. Im Vergleich zu anderen Interpolationsmethoden haben Spline-Funktionen den Vorteil, dass sie weniger anfällig für Oszillationen und Überfitten sind. Sie können auch leicht angepasst werden, um bestimmte Eigenschaften der Daten hervorzuheben oder zu unterdrücken. In vielen Anwendungen, in denen genaue Vorhersagen oder Schätzungen erforderlich sind, sind Spline-Funktionen eine wichtige Wahl.	
+		\end{frame} 
+	
+		\appendix{}
+		
+		\mode<presentation>
+		\begin{frame}
+			\frametitle{Implementierung der kubischen Spline-Interpolation von Hermite}
+			
+			\lstinputlisting[language=python]{
+				../../../shared/sources/SplineHermit.py}
+			
+		\end{frame}
+		\mode* 
+		
+			\mode<presentation>
+		\begin{frame}
+			\frametitle{Implementierung der kubischen Spline-Interpolation von Catmull-Rom}
+			
+			\lstinputlisting[language=python]{
+				../../../shared/sources/Catmull-Rom.py}
+			
+		\end{frame}
+		\mode* 
+		
+		
+		\backmatter                     % keine Zählung der folgenden Kapitel
+		
+		\begin{frame}
+			\frametitle{Literaturverzeichnis}
+			
+			\printbibliography
+		\end{frame}
+	
+	
+}	
+		
+	\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-engine: luatex
+%%% ispell-local-dictionary: "deutsch8"
+%%% End:
